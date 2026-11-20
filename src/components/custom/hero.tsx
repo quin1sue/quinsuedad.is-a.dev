@@ -1,27 +1,54 @@
-import { ArrowDown } from "lucide-react";
-import Link from "next/link";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 
 export function Hero() {
   return (
-    <main className="-z-10 w-full h-[90vh] flex items-center justify-center text-center">
-      <section className="flex flex-col items-center animate-slide-up">
-        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold">
-          Alquin Suedad
-        </h1>
-        <h2 className="sm:text-xl md:text-2xl lg:text-3xl mt-5">A Full-Stack Developer from the Philippines.</h2>
-        <p className="text-sm sm:text-xl mt-6 max-w-2xl mx-auto leading-relaxed border-t p-4">
-          I have a passion for exploring tech-related fields that fascinate me,
-          such as Software Development and Artificial Intelligence.
-        </p>
-        <div className="mt-8 items-center space-x-3.5 px-6 py-3 rounded-full border flex text-white font-semibold hover:text-black hover:bg-gray-200 transition-all"
->
-          <Link
-            href="#about-me">
-            Scroll Down 
-          </Link>
-          <ArrowDown className="animate-bounce" />
-        </div>
-      </section>
-    </main>
+    <section
+      id="home"
+      aria-labelledby="hero-title"
+      className="shell flex min-h-[calc(100svh-4rem)] flex-col justify-center py-20 sm:py-24"
+    >
+      <h1
+        id="hero-title"
+        className="max-w-[14ch] text-balance text-[clamp(3rem,8vw,6rem)] font-medium leading-[0.95] tracking-[-0.035em]"
+      >
+        Alquin Suedad<span className="text-accent">.</span>
+      </h1>
+
+      <p className="mt-6 text-[clamp(1.15rem,2vw,1.4rem)] leading-snug text-foreground/90">
+        Full-Stack Developer, Philippines.
+      </p>
+
+      <p className="mt-4 max-w-[52ch] text-pretty text-[17px] leading-[1.7] text-muted">
+        I build web applications and explore technologies across software
+        development and cloud computing.
+      </p>
+
+      <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-[15px]">
+        <a href="#projects" className="link-inline group">
+          View projects &#58;&#41;
+        </a>
+        <a href="#contact" className="link-inline">
+          Get in touch
+        </a>
+        <a
+          href="https://github.com/quin1sue"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="link-inline group"
+        >
+          GitHub
+        
+        </a>
+        <a
+          href="https://www.linkedin.com/in/alquin-suedad/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="link-inline group"
+        >
+          LinkedIn
+         
+        </a>
+      </div>
+    </section>
   );
 }

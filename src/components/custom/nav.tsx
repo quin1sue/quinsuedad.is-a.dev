@@ -1,25 +1,80 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
+import {
+  SECTION_IDS,
+  SECTION_LABELS,
+  isSectionId,
+  type SectionId,
+} from "@/lib/section-navigation";
+
+const links = SECTION_IDS.filter((id) => id !== "home").map((id) => ({
+  id,
+  label: SECTION_LABELS[id],
+}));
+
 export function Nav() {
+  const [active, setActive] = useState<SectionId>("home");
+
+  useEffect(() => {
+    const sections = SECTION_IDS.map((id) =>
+      document.getElementById(id)
+    ).filter((section): section is HTMLElement => Boolean(section));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && isSectionId(entry.target.id)) {
+            setActive(entry.target.id);
+          }
+        }
+      },
+      { rootMargin: "-40% 0px -55% 0px" }
+    );
+
+    for (const section of sections) {
+      observer.observe(section);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <nav className="fixed top-3 left-1/2 transform -translate-x-1/2 z-50">
-      <ul className="flex items-center justify-center space-x-6 border p-3 rounded-lg border-gray-300 shadow-sm backdrop-blur-md">
-        {[
-          ["Github", "https://github.com/quin1sue"],
-          ["LinkedIn", "https://www.linkedin.com/in/alquin-suedad/"],
-          ["Email", "mailto:suedadken@gmail.com"],
-          ["Resume", "https://drive.google.com/file/d/1Amps_POqwdYqJAuw_urPRgD8xNUd8fyN/view?usp=drive_link"],
-        ].map(([name, link], index) => (
-          <li key={index}>
-            <a
-              href={link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative font-semibold transition-all duration-300 hover:text-gray-600 after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-gray-600 after:left-0 after:-bottom-1 after:transition-all hover:after:w-full"
-            >
-              {name}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <header className="sticky top-0 z-50 border-b border-line bg-background">
+      <div className="shell flex h-16 items-center justify-between gap-6">
+        <a
+          href="#home"
+          className="text-[15px] font-medium tracking-[-0.01em] text-foreground transition-colors duration-200 hover:text-accent"
+        >
+          Alquin Suedad
+        </a>
+
+        <nav aria-label="Primary">
+          <ul className="flex items-center gap-5 sm:gap-7">
+            {links.map((link) => {
+              const isActive = active === link.id;
+
+              return (
+                <li key={link.id}>
+                  <a
+                    href={`#${link.id}`}
+                    aria-current={isActive ? "location" : undefined}
+                    className={cn(
+                      "text-[13px] transition-colors duration-200 sm:text-sm",
+                      isActive
+                        ? "text-foreground"
+                        : "text-muted hover:text-foreground"
+                    )}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </div>
+    </header>
   );
 }

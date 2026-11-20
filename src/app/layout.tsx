@@ -1,16 +1,40 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Jost } from "next/font/google";
 import { Nav } from "@/components/custom/nav";
 import "./globals.css";
 
-const jostSans = Jost({
-  variable: "--font-geist-sans",
+const jost = Jost({
+  variable: "--font-jost",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Alquin Suedad | Portfolio",
-  description: "Alquin Suedad is a Full-Stack Developer from the Philippines who is eager to grow and learn with other people. Whether it's developers or any tech-related subjects, Alquin is eager to collaborate with other people seeking opportunities to provide a seamless softwares for those who in need.",
+  title: "Alquin Suedad — Full-Stack Developer",
+  description:
+    "Alquin Suedad, also known as Quin, is a full-stack developer from the Philippines with an interest in software development and cloud technologies.",
+  authors: [{ name: "Alquin Suedad" }],
+  creator: "Alquin Suedad",
+  openGraph: {
+    type: "website",
+    title: "Alquin Suedad — Full-Stack Developer",
+    description:
+      "Alquin Suedad, also known as Quin, is a full-stack developer from the Philippines with an interest in software development and cloud technologies.",
+    siteName: "Alquin Suedad",
+  },
+  twitter: {
+    card: "summary",
+    title: "Alquin Suedad — Full-Stack Developer",
+    description:
+      "Alquin Suedad, also known as Quin, is a full-stack developer from the Philippines with an interest in software development and cloud technologies.",
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#121310",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
@@ -21,12 +45,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${jostSans.className} antialiased bg-black text-white animate-fade-in relative`}
+        className={`${jost.variable} bg-background font-sans text-foreground antialiased`}
       >
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-5 focus:top-5 focus:z-[60] focus:bg-foreground focus:px-4 focus:py-2.5 focus:text-sm focus:font-medium focus:text-background"
+        >
+          Skip to content
+        </a>
         <Nav />
-        {/* background */}
-        <div className="-z-10 absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-size-[14px_24px]" />
-        <div className="-z-10 absolute left-0 right-0 top-[-10%] h-[900px] rounded-full bg-[radial-gradient(circle_400px_at_50%_300px,#fbfbfb36,#000)]"/>
         {children}
       </body>
     </html>

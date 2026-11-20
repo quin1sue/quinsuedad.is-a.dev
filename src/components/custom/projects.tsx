@@ -1,114 +1,164 @@
-import { Github } from "lucide-react";
 import Image from "next/image";
 
-export function Projects() {
-  const projects = [
-    {
-      name: "Price Guides PH",
-      image: "/price-guides-proj.png",
-      link: "https://price-guides.bettergov.ph/",
-      description:
-        "An economic and financial data platform containing over 1,500+ datasets — centralized within a single web app under BetterGov.ph.",
+type Project = {
+  slug: string;
+  name: string;
+  designation: "Personal project" | "Collaborated project";
+  description: string;
+  contribution?: string;
+  href?: string;
+  displayUrl?: string;
+  linkLabel?: string;
+  image: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+  };
+};
+
+const projects: Project[] = [
+  {
+    slug: "priceguides",
+    name: "PriceGuides",
+    designation: "Personal project",
+    description:
+      "PriceGuides is an economic and financial data platform designed to promote transparency and awareness. It collects, parses, and shares financial and economic information such as gas prices, market prices, currency exchange rates, and more.",
+    href: "https://price-guides.bettergov.ph",
+    displayUrl: "price-guides.bettergov.ph",
+    linkLabel: "Visit the PriceGuides website",
+    image: {
+      src: "/price-guides-proj.png",
+      alt: "PriceGuides dashboard listing Philippine economic indicators and charts",
+      width: 1575,
+      height: 702,
     },
-  ];
+  },
+  {
+    slug: "school-recruitment-system",
+    name: "School Organization Recruitment System",
+    designation: "Collaborated project",
+    description:
+      "A school organization recruitment system for City College of Tagaytay. I worked with the project team across frontend development, quality assurance, and security testing.",
+    contribution:
+      "I contributed to responsive UI implementation, quality assurance, frontend testing, identifying security-related edge cases, documenting findings, and coordinating fixes with the project lead.",
+    href: "https://pcs.citycollegeoftagaytay.edu.ph",
+    displayUrl: "pcs.citycollegeoftagaytay.edu.ph",
+    linkLabel: "Visit the School Organization Recruitment System website",
+    image: {
+      src: "/pcs_web.png",
+      alt: "Pixel and Code Society recruitment website homepage with navigation and an introduction section",
+      width: 1582,
+      height: 819,
+    },
+  },
+  {
+    slug: "hotlines-bettergov",
+    name: "Hotlines PH",
+    designation: "Collaborated project",
+    description:
+      "A progressive web application (PWA) for quick access to emergency hotlines across the Philippines. Users can search by region, province, city, and hotline type (police, fire, medical, government, etc.), and instantly get the right numbers for their area.",
+    contribution: "",
+    href: "https://hotlines.bettergov.ph",
+    displayUrl: "hotlines.bettergov.ph",
+    linkLabel: "Visit Hotlines Ph by BetterGov",
+    image: {
+      src: "/hotlines-ph.png",
+      alt: "hotlines ph website homepage with navigation and an introduction section",
+      width: 1582,
+      height: 819,
+    },
+  },
+];
+
+function ProjectEntry({ project }: { project: Project }) {
+  const imageContent = (
+    <div className="group/image relative overflow-hidden bg-surface">
+      <Image
+        src={project.image.src}
+        alt={project.image.alt}
+        width={project.image.width}
+        height={project.image.height}
+        quality={90}
+        sizes="(min-width: 1088px) 1088px, 100vw"
+        className="h-auto w-full transition-transform duration-500 ease-out group-hover/image:scale-[1.01]"
+      />
+
+      {project.displayUrl ? (
+        <span className="pointer-events-none absolute bottom-3 tracking-wide left-3 rounded-full border border-line bg-surface/90 px-3 py-1 text-xs font-medium text-ink backdrop-blur-sm">
+          {project.displayUrl}
+        </span>
+      ) : null}
+    </div>
+  );
 
   return (
-    <>
-      <main className="text-center mt-8 border-t border-gray-700 min-h-[40vh] p-6 relative overflow-hidden">
-        <h2 className="text-4xl font-bold mb-6">About Me</h2>
+    <article aria-labelledby={`${project.slug}-title`}>
+      <figure className="m-0">
+        {project.href ? (
+          <a
+            href={project.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={project.linkLabel}
+            className="block"
+          >
+            {imageContent}
+          </a>
+        ) : (
+          imageContent
+        )}
+      </figure>
 
-        <section className="absolute top-0 left-0 w-full h-full pointer-events-none -z-10">
-          <Image
-            alt="python"
-            src={"/icons/python.png"}
-            width={100}
-            height={100}
-            className="h-16 w-16 absolute top-3 left-4 rotate-[-15deg] sm:h-20 sm:w-20"
-          />
-          <Image
-            alt="typescript"
-            src={"/icons/typescript.png"}
-            width={100}
-            height={100}
-            className="h-16 w-16 absolute top-8 right-4 rotate-10 sm:h-20 sm:w-20"
-          />
-          <Image
-            alt="sql"
-            src={"/icons/sql.png"}
-            width={100}
-            height={100}
-            className="h-16 w-16 absolute bottom-4 right-10 skew-x-3 sm:h-20 sm:w-20"
-          />
-          <Image
-            alt="cpp"
-            src={"/icons/cpp.png"}
-            width={100}
-            height={100}
-            className="h-16 -z-10 w-16 absolute bottom-4 left-10 rotate-15 sm:h-20 sm:w-20"
-          />
-        </section>
-        <p className="leading-relaxed text-lg mt-4 max-w-3xl mx-auto px-2 sm:px-0">
-          Hi! I am <b>Alquin Suedad</b>, also known as <b>Quin</b>. I started learning programming at the age of 17 (2023), beginning with the fundamentals in <b>C++</b> and software development, along with <b>HTML</b>, <b>CSS</b>, and <b>JavaScript</b>. At the time, I didn’t yet realize that frameworks could make development much more efficient.
-        </p>
-
-        <p className="leading-relaxed text-lg mt-4 max-w-3xl mx-auto px-2 sm:px-0">
-          After a year of learning, I began exploring powerful libraries and frameworks such as <b>React</b> and <b>Next.js</b>. These tools made development more seamless and enjoyable, enabling me to design and build full-stack applications with greater efficiency.
-        </p>
-
-        <a
-          href="https://www.flaticon.com/free-icons/sql"
-          className="text-gray-400 hover:underline mt-4 inline-block"
-          title="SQL icons"
-        >
-          Icons created by Aswell Studio - Flaticon
-        </a>
-      </main>
-
-      {/* Projects Section */}
-      <main
-        id="projects"
-        className="min-h-[70vh] w-full border-t border-gray-700 px-4 sm:px-6 py-12 sm:py-16 bg-black text-white flex flex-col items-center justify-center"
-      >
-        <div className="max-w-6xl w-full">
-          <div className="flex items-center space-x-3 justify-center mb-12 gap-2">
-            <a href="https://github.com/quin1sue" rel="noreferrer noopener" target="_blank" className="hover:underline text-4xl font-bold text-center">Projects</a>
-            <Github size={40}/>
-          </div>
-
-          {projects.map((project, index) => (
-            <article
-              key={index}
-              className={`flex flex-col ${
-                index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
-              } items-center gap-8 mb-12`}
-            >
-              {/* Project Image */}
-              <section className="relative w-full lg:w-1/2 h-64 sm:h-80 rounded-2xl overflow-hidden border border-gray-800 hover:border-gray-600 transition-all duration-500">
-                <Image
-                  src={project.image}
-                  alt={project.name}
-                  fill
-                  className="object-cover opacity-80 hover:opacity-100 transition-all duration-500"
-                />
-              </section>
-
-              {/* Project Description */}
-              <section className="lg:w-1/2 text-center lg:text-left space-y-4 px-2 sm:px-0">
-                <h3 className="text-2xl sm:text-3xl font-semibold">{project.name}</h3>
-                <p className="text-gray-300 leading-relaxed">{project.description}</p>
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block mt-4 px-6 py-3 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition-all hover:scale-105 duration-300"
-                >
-                  Visit Project
-                </a>
-              </section>
-            </article>
-          ))}
+      <div className="mt-6 grid gap-x-10 gap-y-4 sm:mt-7 sm:grid-cols-12">
+        <div className="sm:col-span-5">
+          <h3
+            id={`${project.slug}-title`}
+            className="text-balance text-[clamp(1.35rem,2.2vw,1.75rem)] font-medium leading-tight tracking-[-0.025em]"
+          >
+            {project.name}
+          </h3>
+          <p className="mt-2 text-sm">{project.designation}</p>
         </div>
-      </main>
-    </>
+
+        <div className="sm:col-span-7">
+          <p className="max-w-[62ch] text-pretty text-[15px] leading-[1.75] text-muted">
+            {project.description}
+          </p>
+
+          {project.contribution ? (
+            <p className="mt-3 max-w-[62ch] text-pretty text-[15px] leading-[1.75] text-muted">
+              {project.contribution}
+            </p>
+          ) : null}
+        </div>
+      </div>
+    </article>
+  );
+}
+
+export function Projects() {
+  return (
+    <section
+      id="projects"
+      aria-labelledby="projects-title"
+      className="shell border-t border-line py-20 sm:py-28"
+    >
+      <h2
+        id="projects-title"
+        className="text-[clamp(1.75rem,3vw,2.25rem)] font-medium tracking-[-0.03em]"
+      >
+        Projects
+      </h2>
+      <p className="mt-3 max-w-[55ch] text-[15px] leading-[1.7] ">
+        Selected work, both independent and collaborative.
+      </p>
+
+      <div className="mt-14 space-y-20 sm:mt-16 sm:space-y-28">
+        {projects.map((project) => (
+          <ProjectEntry key={project.slug} project={project} />
+        ))}
+      </div>
+    </section>
   );
 }

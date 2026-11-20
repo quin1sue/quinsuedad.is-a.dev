@@ -1,5 +1,17 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Structure
+
+A four-section editorial portfolio in normal document flow: Hero, Projects,
+About, and Contact. There is no full-page scroll engine, scroll library, or
+carousel dependency.
+
+- `src/components/custom/` holds the four section components plus the sticky
+  header and footer.
+- `src/lib/section-navigation.ts` defines the section IDs and labels used by
+  the header's scroll-spy navigation.
+- `src/app/globals.css` carries the type, color, and spacing tokens.
+
 ## Getting Started
 
 First, run the development server:
